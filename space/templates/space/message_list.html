@@ -5,6 +5,15 @@
     <title>Список сообщений</title>
 </head>
 <body>
+<div>
+    <h1><a href="/">Список сообщений</a></h1>
+</div>
 
+{% for message in messages %}
+    <div>
+        <p>published: {{ message.published_date }}</p>
+        <h1><a href="">{{ message.text|linebreaksbr }}</a></h1>
+    </div>
+{% endfor %}
 </body>
 </html>
