@@ -4,7 +4,7 @@ from django.utils import timezone
 
 class Space(models.Model):
     text = models.TextField()
-    published_date = models.DateTimeField(blank=True, null=True)
+    published_date = models.DateTimeField(auto_created=True, blank=True, null=False)
     read = models.BooleanField()
 
     def publish(self):

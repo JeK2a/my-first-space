@@ -1,19 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
+{% load staticfiles %}
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Список сообщений</title>
+    <title>Список непрочитанных сообщений</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/space.css' %}">
 </head>
 <body>
-<div>
-    <h1><a href="/">Список сообщений</a></h1>
-</div>
+{#    <script src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.25/vue.min.js"></script>#}
+{##}
+{#    <script>#}
+{#        new Vue({#}
+{#            el: "#app",#}
+{#            data: {#}
+{#                mesVue: {#}
+{#                    id: message.pk#}
+{#                }#}
+{#            }#}
+{#        })#}
+{#    </script>#}
+{##}
+{#    <div>#}
+{#        <h1>Список непрочитанных сообщений</h1>#}
+{#        <a href="/False" class="button7">Сделать все сообщения не прочитанными</a>#}
+{#    </div>#}
+{#    <div>#}
+{#        {% for message in messages %}#}
+{#            {% if message.read == False %}#}
+{#                <a href="/api/mark_read?id={{ mesVue.pk }}" class="button7">Прочитано</a>#}
+{#                <p>{{ mesVue.text }}</p>#}
+{#                <p>{{ mesVue.published_date }}</p>#}
+{#            {% endif %}#}
+{#        {% endfor %}#}
+{#    </div>#}
 
-{% for message in messages %}
+
     <div>
-        <p>published: {{ message.published_date }}</p>
-        <h1><a href="">{{ message.text|linebreaksbr }}</a></h1>
+        <h1>Список непрочитанных сообщений</h1>
+        <a href="/False" class="button7">Сделать все сообщения не прочитанными</a>
     </div>
-{% endfor %}
+    <div>
+        <table cellpadding="40">
+        {% for message in messages %}
+            {% if message.read == False %}
+                <tr>
+                    <td rowspan="2"><a href="/api/mark_read?id={{ message.pk }}" class="button7">Прочитано</a></td>
+                    <td><h1>{{ message.text }}</h1></td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>{{ message.published_date }}</p>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </table>
+    </div>
 </body>
 </html>

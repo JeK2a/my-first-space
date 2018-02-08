@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('text', models.TextField()),
-                ('published_date', models.DateTimeField(blank=True, null=True)),
+                ('published_date', models.DateTimeField(auto_created=True, blank=True, null=False)),
                 ('read', models.BooleanField()),
             ],
         ),
