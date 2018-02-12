@@ -13,8 +13,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'css/space.css' %}">
 </head>
-<body>
-    <div class="container-fluid" id="app" style="background-color:#16cc06">
+<body style="background-color:#16cc06">
+    <div class="container-fluid" id="app" >
         <h1 align="center">Список сообщений</h1>
 {#        <a href="/False" class="button7">Сделать все сообщения не прочитанными</a>#}
         <div class="row" v-for="message in json" style="border: 10px solid #16cc06">
