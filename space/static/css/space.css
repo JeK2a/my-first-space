@@ -46,10 +46,10 @@ h1, h2, h3, h4 {
 }
 
 a.button7 {
-    font-weight: 800;
+    font-weight: 600;
     color: white;
     text-decoration: none;
-    padding: .8em 1em calc(.8em + 3px);
+    padding: .3em 1em calc(.3em + 3px);
     border-radius: 3px;
     background: rgb(64,199,129);
     box-shadow: 0 -3px rgb(53,167,110) inset;

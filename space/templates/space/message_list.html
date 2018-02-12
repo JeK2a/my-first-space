@@ -1,61 +1,69 @@
 {% load staticfiles %}
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Список непрочитанных сообщений</title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
     <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/space.css' %}">
+{#    <link rel="stylesheet" type="text/css" href="{% static 'css/space.css' %}">#}
 </head>
 <body>
-{#    <script src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.25/vue.min.js"></script>#}
-{##}
-{#    <script>#}
-{#        new Vue({#}
-{#            el: "#app",#}
-{#            data: {#}
-{#                mesVue: {#}
-{#                    id: message.pk#}
-{#                }#}
-{#            }#}
-{#        })#}
-{#    </script>#}
-{##}
-{#    <div>#}
-{#        <h1>Список непрочитанных сообщений</h1>#}
-{#        <a href="/False" class="button7">Сделать все сообщения не прочитанными</a>#}
-{#    </div>#}
-{#    <div>#}
-{#        {% for message in messages %}#}
-{#            {% if message.read == False %}#}
-{#                <a href="/api/mark_read?id={{ mesVue.pk }}" class="button7">Прочитано</a>#}
-{#                <p>{{ mesVue.text }}</p>#}
-{#                <p>{{ mesVue.published_date }}</p>#}
-{#            {% endif %}#}
-{#        {% endfor %}#}
-{#    </div>#}
 
 
-    <div>
-        <h1>Список непрочитанных сообщений</h1>
-        <a href="/False" class="button7">Сделать все сообщения не прочитанными</a>
-    </div>
-    <div>
-        <table cellpadding="40">
-        {% for message in messages %}
-            {% if message.read == False %}
-                <tr>
-                    <td rowspan="2"><a href="/api/mark_read?id={{ message.pk }}" class="button7">Прочитано</a></td>
-                    <td><h1>{{ message.text }}</h1></td>
+<div>
+    <h1>Список непрочитанных сообщений</h1>
+    <a href="/False" class="button7">Сделать все сообщения не прочитанными</a>
+</div>
+
+    <div id="app">
+        <table v-for="message in json">
+            <tr>
+                <td><button v-on:click="read(message.id)">Прочитано</button></td>
+                <td><p>[[ message.text ]]</p></td>
                 </tr>
-                <tr>
-                    <td>
-                        <p>{{ message.published_date }}</p>
-                    </td>
-                </tr>
-            {% endif %}
-        {% endfor %}
         </table>
     </div>
+
+<script>
+    var vu =new Vue({
+        el: '#app',
+        url: '',
+        data: {
+            json: [],
+            lastid: null
+        },
+        delimiters: ["[[", "]]"],
+        created: function () {
+            fetch('/json')
+                .then(r => r.json())
+                .then(json => {
+                    this.json=json;
+                    this.lastid = this.json[this.json.length - 1].id;
+                });
+        },
+        methods: {
+            read: function (id) {
+               var setread = new XMLHttpRequest();
+               setread.open("GET", "/api/mark_read?id=" + id, false);
+               setread.send();
+            }
+        }
+    });
+    myVar = setInterval(function () {
+        fetch('/api/get_messages?last_id=' + vu.lastid)
+            .then(r => r.json())
+            .then(json => {
+                if (json != null) {
+                    if (json.length > 0) {
+                        vu.json = vu.json.concat(json);
+                        vu.lastid = vu.json[vu.json.length - 1].id;
+                    }
+                }
+            });
+    }, 10000);
+
+</script>
+
 </body>
 </html>
