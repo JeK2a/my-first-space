@@ -34,7 +34,9 @@
                 json: [],
                 lastid: null,
             },
+
             delimiters: ["[[", "]]"],
+
             created: function () {
                 fetch('/json')
                     .then(r => r.json())
@@ -43,6 +45,7 @@
                         this.lastid = this.json[this.json.length - 1].id;
                     });
             },
+
             methods: {
                 read: function (id) {
                     var setread = new XMLHttpRequest();
